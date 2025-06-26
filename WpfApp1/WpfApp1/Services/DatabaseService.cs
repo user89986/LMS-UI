@@ -20,19 +20,14 @@ public class DatabaseService
     public async Task<DataTable> GetTableDataAsync(string tableName)
     {
         using var connection = await GetConnectionAsync();
-        try
-        {
+       
             var command = new NpgsqlCommand($"SELECT * FROM {tableName}", connection);
             var adapter = new NpgsqlDataAdapter(command);
             var dataTable = new DataTable();
             adapter.Fill(dataTable);
             return dataTable;
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Database error: {ex.Message}");
-            return new DataTable();
-        }
+        
+       
     }
 
     public async Task UpdateTableAsync(DataTable table)
